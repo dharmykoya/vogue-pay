@@ -22,7 +22,7 @@ class TransferRecipient extends Model
         "bank_name"
     ];
 
-    public function transferRecipients()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
