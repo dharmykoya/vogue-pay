@@ -21,3 +21,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/test', 'Controller@test');
 Route::post('/register', 'AuthController@register')->name('register');
 Route::post('/login', 'AuthController@login')->name('login');
+
+
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::group(['namespace' => 'Payments'], function () {
+        Route::post('resolve-account', 'TransferController@resolveAccountNumber')->name('resolve');
+        Route::post('transfer-recipients', 'TransferController@createRecipient')->name('create-recipient');
+    });
+});
