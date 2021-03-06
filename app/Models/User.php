@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(TransferRecipient::class);
     }
+
+    public function transfers()
+    {
+        return $this->hasMany(Transfer::class);
+    }
 }

@@ -68,4 +68,21 @@ class PaystackService
 
         return ['status' => true, 'response' => $response->json()];
     }
+
+    public function initiateTransfer($recipient, $amount, $reason, $source = "balance")
+    {
+        $response = Http::withHeaders($this->header)
+            ->post("$this->baseUrl/transfer", [
+                "recipient" => $recipient,
+                "amount" => $amount,
+	            "reason" => $reason,
+                "source" => $source
+            ]);
+
+        if ($response->failed()) {
+            return ['status' => false, 'response' => $response->json(), 'message' => 'Account verification failed.'];
+        }
+
+        return ['status' => true, 'response' => $response->json()];
+    }
 }

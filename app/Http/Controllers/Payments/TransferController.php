@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Payments;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payment\CreateRecipientRequest;
+use App\Http\Requests\Payment\InitiateTransferRequest;
 use App\Http\Requests\Payment\VerifyAccountNumberRequest;
 use App\Http\Resources\TransferRecipientResource;
+use App\Http\Resources\TransferResource;
 use App\services\TransferService;
+use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
 class TransferController extends Controller
@@ -14,7 +17,8 @@ class TransferController extends Controller
     protected $transferService;
 
 
-    public function __construct(TransferService $transferService) {
+    public function __construct(TransferService $transferService)
+    {
         $this->transferService = $transferService;
     }
 
@@ -24,7 +28,7 @@ class TransferController extends Controller
             $response = $this->transferService->verifyAccountNumber($request->validated());
 
             if (!$response['status']) {
-               return $this->errorResponse(null, 'verification failed');
+                return $this->errorResponse(null, 'verification failed');
             }
 
             return $this->successResponse(
@@ -32,7 +36,7 @@ class TransferController extends Controller
                 $response['message'],
                 Response::HTTP_OK
             );
-        } catch (\Exception $error) {
+        } catch (Exception $error) {
             $this->fatalErrorResponse($error);
         }
     }
@@ -51,7 +55,26 @@ class TransferController extends Controller
                 $response['message'],
                 Response::HTTP_CREATED
             );
-        } catch (\Exception $error) {
+        } catch (Exception $error) {
+            $this->fatalErrorResponse($error);
+        }
+    }
+
+    public function initiateTransfer(InitiateTransferRequest $request)
+    {
+        try {
+            $response = $this->transferService->initiateTransferService($request->validated());
+
+            if (!$response['status']) {
+                return $this->errorResponse(null, $response['message']);
+            }
+
+            return $this->successResponse(
+                new TransferResource($response['data']),
+                $response['message'],
+                Response::HTTP_CREATED
+            );
+        } catch (Exception $error) {
             $this->fatalErrorResponse($error);
         }
     }

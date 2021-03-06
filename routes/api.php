@@ -27,5 +27,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['namespace' => 'Payments'], function () {
         Route::post('resolve-account', 'TransferController@resolveAccountNumber')->name('resolve');
         Route::post('transfer-recipients', 'TransferController@createRecipient')->name('create-recipient');
+        Route::post('transfer', 'TransferController@initiateTransfer')->name('initiate-transfer');
     });
 });
