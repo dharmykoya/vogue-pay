@@ -7,6 +7,7 @@ use App\Http\Requests\Payment\CreateRecipientRequest;
 use App\Http\Requests\Payment\InitiateTransferRequest;
 use App\Http\Requests\Payment\VerifyAccountNumberRequest;
 use App\Http\Resources\TransferRecipientResource;
+use App\Http\Resources\TransferResource;
 use App\services\TransferService;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
@@ -69,7 +70,7 @@ class TransferController extends Controller
             }
 
             return $this->successResponse(
-                new TransferRecipientResource($response['data']),
+                new TransferResource($response['data']),
                 $response['message'],
                 Response::HTTP_CREATED
             );
