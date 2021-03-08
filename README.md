@@ -57,6 +57,83 @@ In order to ensure that the Laravel community is welcoming to all, please review
 
 If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
+## Endpoints:
+
+### Register:
+
+`POST /api/register`
+
+Example request body:
+
+```source-json
+{
+  "user":{
+    "email": "jake@jake.jake",
+    "password": "jakejake",
+    "name": "jake jake"
+  }
+}
+```
+
+### Login:
+
+`POST /api/login`
+
+Example request body:
+
+```source-json
+{
+  "user":{
+    "email": "jake@jake.jake",
+    "password": "jakejake",
+  }
+}
+```
+
+### resolve account number:
+##### to confirm account number
+`POST /api/resolve-account`
+Example request body:
+
+```source-json
+{
+  "user":{
+    "account_number": "0123456789",
+    "bank code": "058",
+  }
+}
+```
+
+### create recipient:
+##### to create transfer recipient
+`POST /api/transfer-recipients`
+Example request body:
+
+```source-json
+{
+  "user":{
+    "account_number": "0123456789",
+    "bank code": "058",
+    "name": "jake jake"
+  }
+}
+```
+
+### inititat transfer:
+##### to initiate a trasfer(send money)
+`POST /api/transfer`
+Example request body:
+
+```source-json
+{
+  "user":{
+    "recipient_code": "0123456789",
+    "amount code": "058",
+    "reason": "jake jake"
+  }
+}
+```
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
